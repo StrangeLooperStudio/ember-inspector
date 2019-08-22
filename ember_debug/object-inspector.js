@@ -548,13 +548,13 @@ function addProperties(properties, hash) {
     if (isComputed(hash, prop)) {
       options.dependentKeys = (getDescriptorFor(hash, prop)._dependentKeys || []).map((key) => key.toString());
       if (!options.isService) {
-        if (typeof hash[prop]._getter === 'function') {
+        if (hash[prop] && typeof hash[prop]._getter === 'function') {
           options.code = Function.prototype.toString.call(hash[prop]._getter);
         } else {
           options.code = '';
         }
       }
-      options.readOnly = hash[prop]._readOnly;
+      options.readOnly = hash[prop] && hash[prop]._readOnly;
     }
     replaceProperty(properties, prop, inspectValue(hash, prop), options);
   }
